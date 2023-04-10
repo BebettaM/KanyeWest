@@ -5,31 +5,27 @@ class Program
 {
     static void Main(string[] args)
     {
-        var client = new HttpClient();
 
-        var kanyeURL = "https://api.kanye.rest/";
 
-        var kanyeResponse = client.GetStringAsync(kanyeURL).Result;
+        bool cont = true;
 
-        var kanyeQuote = JObject.Parse(kanyeResponse).GetValue("quote").ToString();
+        do
+        {
+            KanyeQuotes.QuotesByKanye();
 
-        Console.WriteLine($"Kanye: '{kanyeQuote}'");
+            KanyeQuotes.QuotesByRon();
+            Console.WriteLine("Continue? Y or N?");
 
-        RonQuote();
+            var response = Console.ReadLine().ToLower();
+
+            cont = (response == "n") ? false : true;
+
+        } while (cont);
 
     }
 
-    public static void RonQuote()
-    {
-        var client = new HttpClient();
+    
 
-        var ronURL = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
-
-        var ronResponse = client.GetStringAsync(ronURL).Result;
-
-        var ronQuote = JArray.Parse(ronResponse).ToString().Replace('[', ' ').Replace(']', ' ').Trim();
-
-        Console.WriteLine($"Ron: '{ronQuote}'");
-    }
+    
 }
 
